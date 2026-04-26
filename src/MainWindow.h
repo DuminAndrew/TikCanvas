@@ -10,6 +10,7 @@ class MikroTikManager;
 class SyslogServer;
 class MndpScanner;
 class MapCanvas;
+class BackupManager;
 
 class MainWindow : public QMainWindow
 {
@@ -26,10 +27,32 @@ private slots:
     void onSyslogMessage(const QString &host, const QString &msg);
     void onDeviceFound(const QString &mac, const QString &ip, const QString &identity);
 
+    void onNewProject();
+    void onOpenProject();
+    void onSaveProject();
+    void onSaveProjectAs();
+
+    void onToggleTheme(bool light);
+    void onToggleLinkMode(bool on);
+    void onBackup();
+    void onSsh();
+    void onLanguage(const QString &code);
+    void onAbout();
+
+    void onListDeviceContextDrag();
+
 private:
+    void applyTheme(const QString &which);
+    void buildMenus();
+    bool saveTo(const QString &path);
+
     std::unique_ptr<Ui::MainWindow> ui;
     MikroTikManager *m_api {nullptr};
     SyslogServer    *m_syslog {nullptr};
     MndpScanner     *m_mndp {nullptr};
     MapCanvas       *m_canvas {nullptr};
+    BackupManager   *m_backup {nullptr};
+
+    QString m_currentProject;
+    QString m_currentTheme {"dark"};
 };

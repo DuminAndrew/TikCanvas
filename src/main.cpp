@@ -3,26 +3,17 @@
 #include <QIcon>
 #include <QTextStream>
 #include "MainWindow.h"
-
-static QString loadStyleSheet()
-{
-    QFile f(QStringLiteral(":/styles/dark.qss"));
-    if (!f.open(QIODevice::ReadOnly | QIODevice::Text))
-        return {};
-    return QTextStream(&f).readAll();
-}
+#include "core/I18n.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);
     QApplication::setApplicationName("TikCanvas");
+    QApplication::setApplicationVersion("1.0.0");
     QApplication::setOrganizationName("TikCanvas");
     QApplication::setWindowIcon(QIcon(QStringLiteral(":/icons/app.svg")));
 
-    const QString qss = loadStyleSheet();
-    if (!qss.isEmpty())
-        app.setStyleSheet(qss);
+    I18n::instance().setLanguage("ru");
 
     MainWindow w;
     w.show();

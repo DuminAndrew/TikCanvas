@@ -6,6 +6,10 @@ set(SOURCES
     core/SyslogServer.cpp
     core/MndpScanner.cpp
     core/PdfRenderer.cpp
+    core/ProjectFile.cpp
+    core/BackupManager.cpp
+    core/SshLauncher.cpp
+    core/I18n.cpp
 )
 
 set(HEADERS
@@ -15,6 +19,10 @@ set(HEADERS
     core/SyslogServer.h
     core/MndpScanner.h
     core/PdfRenderer.h
+    core/ProjectFile.h
+    core/BackupManager.h
+    core/SshLauncher.h
+    core/I18n.h
 )
 
 set(FORMS

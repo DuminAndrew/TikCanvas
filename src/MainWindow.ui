@@ -21,9 +21,12 @@
        <item><widget class="QLineEdit" name="editPass"><property name="echoMode"><enum>QLineEdit::Password</enum></property></widget></item>
        <item><widget class="QPushButton" name="btnConnect"><property name="text"><string>Connect</string></property></widget></item>
        <item><widget class="QPushButton" name="btnReboot"><property name="text"><string>Reboot</string></property></widget></item>
+       <item><widget class="QPushButton" name="btnSsh"><property name="text"><string>SSH Terminal</string></property></widget></item>
+       <item><widget class="QPushButton" name="btnBackup"><property name="text"><string>Backup Config</string></property></widget></item>
        <item><widget class="QPushButton" name="btnScan"><property name="text"><string>Discover (MNDP)</string></property></widget></item>
        <item><widget class="QPushButton" name="btnLoadPdf"><property name="text"><string>Load PDF Map</string></property></widget></item>
-       <item><widget class="QLabel" name="lblDevices"><property name="text"><string>Devices</string></property></widget></item>
+       <item><widget class="QPushButton" name="btnLinkMode"><property name="checkable"><bool>true</bool></property><property name="text"><string>Link Mode</string></property></widget></item>
+       <item><widget class="QLabel" name="lblDevices"><property name="text"><string>Devices (drag to map)</string></property></widget></item>
        <item><widget class="QListWidget" name="listDevices"/></item>
       </layout>
      </widget>
@@ -40,6 +43,7 @@
     </item>
    </layout>
   </widget>
+  <widget class="QMenuBar" name="menubar"/>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
