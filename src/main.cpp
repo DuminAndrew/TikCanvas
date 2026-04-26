@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QFile>
+#include <QIcon>
 #include <QTextStream>
 #include "MainWindow.h"
 
@@ -17,6 +18,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QApplication::setApplicationName("TikCanvas");
     QApplication::setOrganizationName("TikCanvas");
+    QApplication::setWindowIcon(QIcon(QStringLiteral(":/icons/app.svg")));
 
     const QString qss = loadStyleSheet();
     if (!qss.isEmpty())
