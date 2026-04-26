@@ -1,0 +1,33 @@
+/* TikCanvas dark theme */
+QWidget {
+    background-color: #1E1E2E;
+    color: #E0E0E0;
+    font-family: "Segoe UI", "Inter", sans-serif;
+    font-size: 13px;
+}
+QFrame#sidePanel {
+    background-color: #181825;
+    border-right: 1px solid #313244;
+}
+QLineEdit, QPlainTextEdit, QListWidget {
+    background-color: #11111B;
+    border: 1px solid #313244;
+    border-radius: 6px;
+    padding: 6px;
+    selection-background-color: #4FC3F7;
+}
+QLineEdit:focus, QPlainTextEdit:focus {
+    border: 1px solid #4FC3F7;
+}
+QPushButton {
+    background-color: #313244;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: #FFFFFF;
+}
+QPushButton:hover  { background-color: #45475A; }
+QPushButton:pressed{ background-color: #4FC3F7; color: #11111B; }
+QStatusBar { background-color: #181825; color: #A6ADC8; }
+QSplitter::handle { background: #313244; }
+QListWidget::item:selected { background: #4FC3F7; color: #11111B; }

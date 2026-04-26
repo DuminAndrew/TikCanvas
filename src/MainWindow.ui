@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>1280</width><height>800</height></rect></property>
+  <property name="windowTitle"><string>TikCanvas</string></property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QFrame" name="sidePanel">
+      <property name="minimumSize"><size><width>320</width><height>0</height></size></property>
+      <property name="maximumSize"><size><width>360</width><height>16777215</height></size></property>
+      <property name="frameShape"><enum>QFrame::StyledPanel</enum></property>
+      <layout class="QVBoxLayout" name="sideLayout">
+       <item><widget class="QLabel" name="lblTitle"><property name="text"><string>TikCanvas</string></property><property name="styleSheet"><string>font-size:22px;font-weight:bold;color:#4FC3F7;padding:8px;</string></property></widget></item>
+       <item><widget class="QLabel" name="lblHost"><property name="text"><string>Host</string></property></widget></item>
+       <item><widget class="QLineEdit" name="editHost"><property name="placeholderText"><string>192.168.88.1</string></property></widget></item>
+       <item><widget class="QLabel" name="lblUser"><property name="text"><string>User</string></property></widget></item>
+       <item><widget class="QLineEdit" name="editUser"><property name="text"><string>admin</string></property></widget></item>
+       <item><widget class="QLabel" name="lblPass"><property name="text"><string>Password</string></property></widget></item>
+       <item><widget class="QLineEdit" name="editPass"><property name="echoMode"><enum>QLineEdit::Password</enum></property></widget></item>
+       <item><widget class="QPushButton" name="btnConnect"><property name="text"><string>Connect</string></property></widget></item>
+       <item><widget class="QPushButton" name="btnReboot"><property name="text"><string>Reboot</string></property></widget></item>
+       <item><widget class="QPushButton" name="btnScan"><property name="text"><string>Discover (MNDP)</string></property></widget></item>
+       <item><widget class="QPushButton" name="btnLoadPdf"><property name="text"><string>Load PDF Map</string></property></widget></item>
+       <item><widget class="QLabel" name="lblDevices"><property name="text"><string>Devices</string></property></widget></item>
+       <item><widget class="QListWidget" name="listDevices"/></item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation"><enum>Qt::Vertical</enum></property>
+      <widget class="QWidget" name="canvasContainer" native="true"/>
+      <widget class="QPlainTextEdit" name="logView">
+       <property name="readOnly"><bool>true</bool></property>
+       <property name="maximumSize"><size><width>16777215</width><height>240</height></size></property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
