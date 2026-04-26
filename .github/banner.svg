@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#1a2540"/>
+      <stop offset="60%" stop-color="#0f1729"/>
+      <stop offset="100%" stop-color="#05080f"/>
+    </radialGradient>
+    <linearGradient id="title" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4FC3F7"/>
+      <stop offset="50%" stop-color="#7C4DFF"/>
+      <stop offset="100%" stop-color="#FF4081"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4FC3F7" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#4FC3F7" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF4081" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#FF4081" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1f2a44" stroke-width="0.6"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="360" fill="url(#bg)"/>
+  <rect width="1200" height="360" fill="url(#grid)" opacity="0.55"/>
+  <circle cx="280" cy="200" r="240" fill="url(#glow1)"/>
+  <circle cx="940" cy="170" r="220" fill="url(#glow2)"/>
+
+  <g transform="translate(600,118)">
+    <g transform="translate(-44,-44)">
+      <rect width="88" height="88" rx="20" fill="#0c1322" stroke="#4FC3F7" stroke-width="2"/>
+      <path d="M22 64 L44 22 L66 64 Z" fill="none" stroke="url(#title)" stroke-width="3.5" stroke-linejoin="round"/>
+      <circle cx="44" cy="52" r="5" fill="#FF4081"/>
+      <circle cx="28" cy="64" r="3" fill="#4FC3F7"/>
+      <circle cx="60" cy="64" r="3" fill="#7C4DFF"/>
+      <line x1="28" y1="64" x2="44" y2="52" stroke="#4FC3F7" stroke-width="1.4"/>
+      <line x1="60" y1="64" x2="44" y2="52" stroke="#7C4DFF" stroke-width="1.4"/>
+    </g>
+  </g>
+
+  <text x="600" y="220" text-anchor="middle"
+        font-family="Segoe UI, Inter, sans-serif"
+        font-size="92" font-weight="800" fill="url(#title)"
+        letter-spacing="-2">TikCanvas</text>
+
+  <text x="600" y="258" text-anchor="middle"
+        font-family="Segoe UI, Inter, sans-serif"
+        font-size="15" font-weight="600" fill="#A6ADC8"
+        letter-spacing="8">MIKROTIK · OPERATIONS · CANVAS</text>
+
+  <text x="600" y="305" text-anchor="middle"
+        font-family="Segoe UI, Inter, sans-serif"
+        font-size="16" fill="#7C8CA8">
+    PDF-карта объекта · RouterOS API · Syslog · MNDP · 60 FPS Qt6
+  </text>
+</svg>

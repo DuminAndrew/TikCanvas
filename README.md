@@ -1,92 +1,158 @@
 <div align="center">
 
-<img src="icon.svg" width="120" alt="TikCanvas"/>
+<img src=".github/banner.svg" alt="TikCanvas" width="100%"/>
 
-# TikCanvas
+<br/>
 
-**Высокопроизводительный десктопный инструмент для сетевых инженеров MikroTik**
+[![Quick Start](https://img.shields.io/badge/⚡_QUICK_START-7C4DFF?style=for-the-badge&logoColor=white)](#-quick-start)
+[![Architecture](https://img.shields.io/badge/🏗_ARCHITECTURE-4FC3F7?style=for-the-badge&logoColor=white)](#-архитектура)
+[![Build](https://img.shields.io/badge/🔧_BUILD-FF4081?style=for-the-badge&logoColor=white)](#-сборка-из-исходного-кода)
+[![Roadmap](https://img.shields.io/badge/🗺_ROADMAP-FF9800?style=for-the-badge&logoColor=white)](#-дорожная-карта)
 
-PDF-карты объектов · RouterOS API · Syslog · Автопоиск устройств — в едином 60 FPS интерфейсе.
+<br/>
 
-![C++](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white)
-![Qt](https://img.shields.io/badge/Qt-6-41CD52?logo=qt&logoColor=white)
-![CMake](https://img.shields.io/badge/CMake-3.21%2B-064F8C?logo=cmake&logoColor=white)
-![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)
-![License](https://img.shields.io/badge/license-MIT-green)
+![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
+![C++](https://img.shields.io/badge/C%2B%2B-20-00599C?style=flat-square&logo=cplusplus&logoColor=white)
+![Qt](https://img.shields.io/badge/Qt-6.8-41CD52?style=flat-square&logo=qt&logoColor=white)
+![CMake](https://img.shields.io/badge/CMake-3.21%2B-064F8C?style=flat-square&logo=cmake&logoColor=white)
+![Poppler](https://img.shields.io/badge/Poppler-Qt6-E91E63?style=flat-square)
+![MikroTik](https://img.shields.io/badge/MikroTik-RouterOS-293239?style=flat-square&logo=mikrotik&logoColor=white)
+![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D4?style=flat-square&logo=windows&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black)
+![macOS](https://img.shields.io/badge/macOS-000000?style=flat-square&logo=apple&logoColor=white)
+
+<br/>
+
+### **Один экран. Карта объекта. Все ваши роутеры.**
+### _Реальное время. Без браузера. Без Electron. Чистый C++._
 
 </div>
 
 ---
 
-## О проекте
+**TikCanvas** — нативное Qt6/C++20 приложение для сетевых инженеров, которое объединяет визуальную карту инфраструктуры (PDF-чертежи здания, объекта, площадки) с инструментами оперативного управления MikroTik-устройствами.
 
-**TikCanvas** — это нативное Qt6/C++20 приложение, которое объединяет визуальную карту инфраструктуры (PDF-чертежи здания, объекта, площадки) с инструментами оперативного управления MikroTik-устройствами. Без браузерных оверхедов, без Electron — чистый компилируемый C++ с асинхронной архитектурой на `QThread` и `QtConcurrent`.
+Каждый сетевой компонент работает в собственном `QThread` через паттерн **Worker + moveToThread**, рендер PDF выполняется в `QtConcurrent` — UI остаётся отзывчивым на 60 FPS даже при сотнях устройств в Syslog-потоке.
 
-> Один экран. Карта объекта. Все ваши роутеры. Реальное время.
+---
 
-## Возможности
+## 📋 Содержание
 
-- 🗺️ **PDF Map Canvas** — отрисовка чертежей через **Poppler-Qt6**, плавный pan & zoom, рендер в фоновом потоке (`QtConcurrent`)
-- 📡 **RouterOS API клиент** — собственная реализация поверх `QTcpSocket`, без внешних зависимостей: подключение, аутентификация, отправка команд (например, `/system/reboot`)
-- 📥 **Syslog Server** — UDP-коллектор на порту 514 в выделенном `QThread` с лайв-выводом
-- 🛰️ **MNDP Auto-discovery** — broadcast-сканер устройств MikroTik в локальной сети
-- 🎨 **Современный тёмный UI** — все формы в `.ui` (Qt Designer), темизация через QSS
-- ⚡ **Асинхронность** — UI всегда отзывчив на 60 FPS, сеть и тяжёлые операции вне главного потока
-- 🌐 **Кросс-платформенность** — Windows, Linux, macOS
+- [✨ Возможности](#-возможности)
+- [🏗 Архитектура](#-архитектура)
+- [🧩 Стек](#-стек)
+- [⚡ Quick Start](#-quick-start)
+- [📦 Установка зависимостей](#-установка-зависимостей)
+- [🔧 Сборка из исходного кода](#-сборка-из-исходного-кода)
+- [🖥 Использование](#-использование)
+- [🗂 Структура проекта](#-структура-проекта)
+- [🗺 Дорожная карта](#-дорожная-карта)
+- [📜 License](#-license)
+- [👤 Автор](#-автор)
 
-## Архитектура
+---
+
+## ✨ Возможности
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🗺 PDF Map Canvas
+Высококачественная отрисовка чертежей через **Poppler-Qt6**.
+Плавный pan & zoom, рендер в фоновом потоке через `QtConcurrent` — UI никогда не залипает на больших файлах.
+
+</td>
+<td width="50%" valign="top">
+
+### 📡 RouterOS API клиент
+Собственная реализация поверх `QTcpSocket` — **без внешних зависимостей**.
+Поддержка `/login`, отправка любых API-команд (`/system/reboot`, `/interface/print`, …).
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### 📥 Syslog Server
+UDP-коллектор на порту **514** в выделенном `QThread`.
+Лайв-вывод сообщений от роутеров с фильтрацией по host.
+
+</td>
+<td width="50%" valign="top">
+
+### 🛰 MNDP Auto-discovery
+Broadcast-сканер протокола **MikroTik Neighbor Discovery** на порту 5678.
+Автоматически собирает MAC, IP и identity всех устройств в LAN.
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### 🎨 Современный тёмный UI
+Все формы в `.ui` (Qt Designer), темизация через **QSS**.
+Лёгкая кастомизация без перекомпиляции.
+
+</td>
+<td width="50%" valign="top">
+
+### ⚡ Асинхронность везде
+Сеть и PDF — вне главного потока.
+Гарантированные **60 FPS** в любой нагрузке.
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🏗 Архитектура
 
 ```
-TikCanvas
-├── MainWindow              ← композиция UI (MainWindow.ui)
-│
-├── widgets/
-│   └── MapCanvas           ← QWidget: отрисовка PDF + оверлей устройств
-│
-├── core/
-│   ├── MikroTikManager     ← QThread + QTcpSocket — RouterOS API
-│   ├── SyslogServer        ← QThread + QUdpSocket :514
-│   ├── MndpScanner         ← QThread + QUdpSocket :5678
-│   └── PdfRenderer         ← Poppler-Qt6 (рендер в QtConcurrent)
-│
-└── resources/
-    ├── dark.qss            ← тема оформления
-    └── resources.qrc       ← qresource манифест
+┌──────────────────────────────────────────────────────────────────┐
+│                        MAIN UI THREAD                            │
+│  ┌──────────────────────────────────────────────────────────┐    │
+│  │  MainWindow  ←─ MainWindow.ui (Qt Designer) + dark.qss   │    │
+│  │      │                                                   │    │
+│  │      ├── MapCanvas      (QWidget, paint PDF + overlays)  │    │
+│  │      ├── DeviceList     (QListWidget)                    │    │
+│  │      └── SyslogView     (QPlainTextEdit)                 │    │
+│  └──────────────────────────────────────────────────────────┘    │
+│           ▲ signals                                              │
+└───────────┼──────────────────────────────────────────────────────┘
+            │
+   ┌────────┴─────────┬──────────────┬──────────────┐
+   │                  │              │              │
+┌──┴────────┐  ┌──────┴─────┐  ┌─────┴─────┐  ┌─────┴─────┐
+│ MikroTik  │  │  Syslog    │  │   MNDP    │  │ PdfRender │
+│ Manager   │  │  Server    │  │  Scanner  │  │ (Concurr.)│
+│           │  │            │  │           │  │           │
+│  QThread  │  │  QThread   │  │  QThread  │  │ QtConcur. │
+│ QTcpSocket│  │ QUdpSocket │  │ QUdpSocket│  │  Poppler  │
+│   :8728   │  │    :514    │  │   :5678   │  │           │
+└───────────┘  └────────────┘  └───────────┘  └───────────┘
 ```
 
-Каждый сетевой компонент живёт в собственном потоке через паттерн **Worker + moveToThread**, общение — через сигналы Qt. Это гарантирует, что главный поток UI никогда не блокируется.
+> 💡 Каждый сетевой компонент изолирован в своём потоке через паттерн **Worker + moveToThread**. Связь — через сигналы Qt с автоматической диспетчеризацией.
 
-## Требования
+---
 
-### Для пользователей
-- Windows 10/11, Linux или macOS 11+
-- 100 МБ свободного места
-- Сеть с доступом до управляемых устройств MikroTik
+## 🧩 Стек
 
-### Для разработки
-- **C++20** компилятор (MSVC 2022 / GCC 11+ / Clang 14+)
-- **Qt 6.5+** — модули Core, Gui, Widgets, Network, Concurrent
-- **CMake 3.21+**
-- **Poppler-Qt6** — для рендеринга PDF-чертежей
+| Слой              | Технология                        | Зачем                                    |
+|-------------------|-----------------------------------|------------------------------------------|
+| 🧠 Язык           | **C++20**                          | concepts, ranges, designated init        |
+| 🖼 UI Framework   | **Qt 6.8** (Widgets)               | нативный кросс-платформенный UI          |
+| ⚙️ Build          | **CMake 3.21+** + Ninja            | кросс-платформенная сборка               |
+| 📄 PDF            | **Poppler-Qt6**                    | high-DPI рендеринг чертежей              |
+| 🌐 Networking     | **QTcpSocket** / **QUdpSocket**    | без внешних сетевых библиотек            |
+| 🧵 Concurrency    | **QThread** + **QtConcurrent**     | строго асинхронная архитектура           |
+| 🎨 Theming        | **QSS** (Qt Style Sheets)          | кастомизация без перекомпиляции          |
 
-## Установка зависимостей
+---
 
-### Windows (vcpkg)
-```powershell
-vcpkg install qtbase:x64-windows poppler[qt]:x64-windows
-```
-
-### Linux (Debian / Ubuntu)
-```bash
-sudo apt install cmake build-essential qt6-base-dev qt6-tools-dev libpoppler-qt6-dev
-```
-
-### macOS (Homebrew)
-```bash
-brew install cmake qt poppler
-```
-
-## Сборка из исходного кода
+## ⚡ Quick Start
 
 ```bash
 git clone https://github.com/DuminAndrew/TikCanvas.git
@@ -94,74 +160,173 @@ cd TikCanvas
 
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --parallel
+
+./build/src/TikCanvas        # Linux / macOS
+.\build\src\TikCanvas.exe    # Windows
 ```
 
-Готовый бинарник появится в `build/src/TikCanvas` (или `build/src/Release/TikCanvas.exe` на Windows).
+> ⚠️ Для рендеринга PDF нужен **Poppler-Qt6**. Без него проект соберётся, но карта будет показывать заглушку.
 
-> 💡 Если Poppler-Qt6 не найден, проект всё равно соберётся — рендер PDF будет заглушкой, остальной функционал работает.
+---
 
-## Использование
+## 📦 Установка зависимостей
 
-1. **Запустите приложение** — `TikCanvas`
-2. **Загрузите PDF-карту объекта** — кнопка `Load PDF Map`
-3. **Найдите устройства** — `Discover (MNDP)` отправит broadcast
-4. **Подключитесь** — введите Host / User / Password и нажмите `Connect`
-5. **Управляйте** — кнопка `Reboot` отправит `/system/reboot` через RouterOS API
-6. **Логи в реальном времени** — Syslog от роутеров отображается внизу экрана
+<details open>
+<summary><b>🪟 Windows (vcpkg)</b></summary>
 
-## Структура проекта
+```powershell
+vcpkg install qtbase:x64-windows poppler[qt]:x64-windows
+```
+
+Либо через официальный установщик [Qt Online Installer](https://www.qt.io/download-qt-installer) — версия 6.5+ (msvc2022_64).
+
+</details>
+
+<details>
+<summary><b>🐧 Linux (Debian / Ubuntu)</b></summary>
+
+```bash
+sudo apt install \
+    cmake build-essential ninja-build \
+    qt6-base-dev qt6-tools-dev \
+    libpoppler-qt6-dev pkg-config
+```
+
+</details>
+
+<details>
+<summary><b>🍎 macOS (Homebrew)</b></summary>
+
+```bash
+brew install cmake ninja qt poppler pkg-config
+```
+
+</details>
+
+---
+
+## 🔧 Сборка из исходного кода
+
+### 1. Подготовка окружения
+- Компилятор с поддержкой **C++20** (MSVC 2022 / GCC 11+ / Clang 14+)
+- **Qt 6.5+** (рекомендуется 6.8.x)
+- **CMake 3.21+**
+- **Poppler-Qt6** (опционально, но рекомендуется)
+
+### 2. Клонирование и конфигурация
+```bash
+git clone https://github.com/DuminAndrew/TikCanvas.git
+cd TikCanvas
+cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+```
+
+### 3. Сборка
+```bash
+cmake --build build --parallel
+```
+
+### 4. Запуск
+```bash
+./build/src/TikCanvas
+```
+
+---
+
+## 🖥 Использование
+
+| Шаг | Действие                                                                |
+|-----|-------------------------------------------------------------------------|
+| 1   | Запустите `TikCanvas`                                                   |
+| 2   | **Load PDF Map** → выберите чертёж объекта                              |
+| 3   | **Discover (MNDP)** → broadcast в LAN, найденные устройства появятся в списке |
+| 4   | Введите Host / User / Password → **Connect**                            |
+| 5   | **Reboot** → отправит `/system/reboot` через RouterOS API               |
+| 6   | Syslog в реальном времени отображается в нижней панели                  |
+
+---
+
+## 🗂 Структура проекта
 
 ```
 TikCanvas/
-├── CMakeLists.txt
-├── README.md
-├── icon.svg
-├── src/
-│   ├── CMakeLists.txt
-│   ├── main.cpp
-│   ├── MainWindow.{h,cpp,ui}
-│   ├── widgets/
-│   │   └── MapCanvas.{h,cpp}
-│   └── core/
-│       ├── MikroTikManager.{h,cpp}
-│       ├── SyslogServer.{h,cpp}
-│       ├── MndpScanner.{h,cpp}
-│       └── PdfRenderer.{h,cpp}
-└── resources/
-    ├── resources.qrc
-    └── dark.qss
+├── 📄 CMakeLists.txt           ← root CMake (находит Qt6 + Poppler-Qt6)
+├── 📄 README.md
+├── 📄 LICENSE
+├── 🎨 icon.svg                 ← иконка приложения
+│
+├── 📁 .github/
+│   └── 🖼 banner.svg
+│
+├── 📁 src/
+│   ├── 📄 CMakeLists.txt
+│   ├── 🚀 main.cpp
+│   ├── 🪟 MainWindow.{h,cpp,ui}
+│   │
+│   ├── 📁 widgets/
+│   │   └── 🗺 MapCanvas.{h,cpp}    ← кастомный QWidget для PDF
+│   │
+│   └── 📁 core/
+│       ├── 📡 MikroTikManager.{h,cpp}   ← RouterOS API (QTcpSocket)
+│       ├── 📥 SyslogServer.{h,cpp}      ← UDP/514 collector
+│       ├── 🛰 MndpScanner.{h,cpp}       ← MNDP discovery
+│       └── 📄 PdfRenderer.{h,cpp}       ← Poppler-Qt6 wrapper
+│
+└── 📁 resources/
+    ├── 📦 resources.qrc
+    └── 🎨 dark.qss
 ```
 
-## Скриншоты
+---
 
-> _placeholder_ — главная карта с устройствами
+## 🗺 Дорожная карта
 
-> _placeholder_ — панель discovery + syslog
-
-## Дорожная карта
-
-- [ ] Рисование линков между устройствами поверх карты
-- [ ] Сохранение/загрузка проекта (*.tikcanvas)
-- [ ] SSH-терминал внутри приложения
+- [x] MVP: MainWindow, темы, подключение MikroTik
+- [x] Syslog Server + MNDP Scanner в QThread
+- [x] PDF Canvas с Poppler-Qt6
+- [ ] Drag-n-drop устройств на карту
+- [ ] Рисование линков между устройствами
+- [ ] Сохранение/загрузка проекта (`*.tikcanvas`)
+- [ ] Встроенный SSH-терминал
 - [ ] Backup-менеджер конфигов
-- [ ] Тёмная/светлая темы
+- [ ] Светлая тема
+- [ ] Мульти-язычность (i18n)
 
-## Лицензия
+---
 
-Распространяется под лицензией **MIT**. См. файл [LICENSE](LICENSE).
+## 📜 License
 
-## Автор
+Распространяется под лицензией **MIT**. Подробности — в файле [LICENSE](LICENSE).
 
-### Андрей Думин
+---
 
-- GitHub: [@DuminAndrew](https://github.com/DuminAndrew)
+## 👤 Автор
 
-## Вклад в проект
+<div align="center">
 
-Pull-request'ы приветствуются. Для крупных изменений сначала откройте issue для обсуждения.
+### **Андрей Думин**
 
-1. Сделайте форк проекта
-2. Создайте ветку (`git checkout -b feature/awesome`)
-3. Закоммитьте изменения (`git commit -m 'Add awesome feature'`)
-4. Запушьте (`git push origin feature/awesome`)
-5. Откройте Pull Request
+[![GitHub](https://img.shields.io/badge/GitHub-DuminAndrew-181717?style=for-the-badge&logo=github)](https://github.com/DuminAndrew)
+
+</div>
+
+---
+
+## 🤝 Вклад в проект
+
+Pull-request'ы приветствуются. Для крупных изменений сначала откройте issue.
+
+```bash
+git checkout -b feature/awesome
+git commit -m "Add awesome feature"
+git push origin feature/awesome
+```
+
+Затем откройте Pull Request.
+
+<div align="center">
+
+<br/>
+
+**⭐ Если проект оказался полезен — поставьте звезду!**
+
+</div>
