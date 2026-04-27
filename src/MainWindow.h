@@ -11,6 +11,7 @@ class SyslogServer;
 class MndpScanner;
 class MapCanvas;
 class BackupManager;
+class DeviceListWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -25,7 +26,8 @@ private slots:
     void onScanClicked();
     void onLoadPdfClicked();
     void onSyslogMessage(const QString &host, const QString &msg);
-    void onDeviceFound(const QString &mac, const QString &ip, const QString &identity);
+    void onDeviceFound(const QString &mac, const QString &ip, const QString &identity,
+                       const QString &version, const QString &board, const QString &platform);
 
     void onNewProject();
     void onOpenProject();
@@ -40,6 +42,17 @@ private slots:
     void onAbout();
 
     void onListDeviceContextDrag();
+    void onSendCmd();
+    void onApiReply(const QStringList &words);
+    void onApiConnected();
+    void onApiError(const QString &msg);
+    void onConfigureSelected();
+    void onPlaceSelectedOnMap();
+
+private:
+    void setStatus(const QString &state, const QString &color);
+    static QString classifyBoard(const QString &board);
+    static QString iconForRole(const QString &role);
 
 private:
     void applyTheme(const QString &which);
@@ -55,4 +68,9 @@ private:
 
     QString m_currentProject;
     QString m_currentTheme {"dark"};
+    int     m_autoHostScore {-1};
+    bool    m_hostUserEdited {false};
+    bool    m_connected {false};
+    int     m_pendingInfoQueries {0};
+    QTimer *m_neighborPollTimer {nullptr};
 };

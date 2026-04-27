@@ -25,7 +25,7 @@ endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network Concurrent)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network Concurrent Pdf)
 qt_standard_project_setup()
 
 find_package(PkgConfig QUIET)

@@ -16,6 +16,33 @@ QLineEdit, QPlainTextEdit, QListWidget {
     padding: 6px;
     selection-background-color: #4FC3F7;
 }
+QPlainTextEdit#terminalView, QPlainTextEdit#infoView, QPlainTextEdit#logView {
+    background-color: #0A0A12;
+    color: #E0F7FA;
+    font-family: "Cascadia Mono", "Consolas", "Courier New", monospace;
+    font-size: 13px;
+    border: 1px solid #4FC3F7;
+}
+QTabWidget::pane { border: 1px solid #313244; background: #181825; }
+QTabBar::tab {
+    background: #181825; color: #A6ADC8;
+    padding: 6px 14px; border: 1px solid #313244;
+    border-bottom: none; border-top-left-radius: 4px; border-top-right-radius: 4px;
+}
+QTabBar::tab:selected { background: #4FC3F7; color: #11111B; font-weight: bold; }
+QTabBar::tab:hover:!selected { background: #313244; color: #FFFFFF; }
+QDialog { background-color: #1E1E2E; }
+QGroupBox {
+    color: #4FC3F7; font-weight: bold;
+    border: 1px solid #313244; border-radius: 6px;
+    margin-top: 12px; padding-top: 12px;
+}
+QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 4px; }
+QComboBox { background-color: #11111B; border: 1px solid #313244; border-radius: 6px; padding: 6px; color: #E0E0E0; }
+QToolBar { background: #181825; border: none; spacing: 4px; }
+QToolButton { background: #313244; border-radius: 4px; padding: 4px 8px; color: #FFFFFF; }
+QToolButton:hover { background: #4FC3F7; color: #11111B; }
+QListWidget { font-size: 12px; }
 QLineEdit:focus, QPlainTextEdit:focus {
     border: 1px solid #4FC3F7;
 }

@@ -2,6 +2,7 @@ set(SOURCES
     main.cpp
     MainWindow.cpp
     widgets/MapCanvas.cpp
+    widgets/DeviceConfigDialog.cpp
     core/MikroTikManager.cpp
     core/SyslogServer.cpp
     core/MndpScanner.cpp
@@ -10,11 +11,15 @@ set(SOURCES
     core/BackupManager.cpp
     core/SshLauncher.cpp
     core/I18n.cpp
+    core/ErrorAdvisor.cpp
+    core/Vectorizer.cpp
 )
 
 set(HEADERS
     MainWindow.h
     widgets/MapCanvas.h
+    widgets/DeviceConfigDialog.h
+    widgets/DeviceListWidget.h
     core/MikroTikManager.h
     core/SyslogServer.h
     core/MndpScanner.h
@@ -23,6 +28,8 @@ set(HEADERS
     core/BackupManager.h
     core/SshLauncher.h
     core/I18n.h
+    core/ErrorAdvisor.h
+    core/Vectorizer.h
 )
 
 set(FORMS
@@ -33,11 +40,16 @@ set(RESOURCES
     ${CMAKE_SOURCE_DIR}/resources/resources.qrc
 )
 
+if(WIN32)
+    set(APP_RC ${CMAKE_CURRENT_SOURCE_DIR}/app.rc)
+endif()
+
 qt_add_executable(TikCanvas WIN32 MACOSX_BUNDLE
     ${SOURCES}
     ${HEADERS}
     ${FORMS}
     ${RESOURCES}
+    ${APP_RC}
 )
 
 target_include_directories(TikCanvas PRIVATE
@@ -52,10 +64,7 @@ target_link_libraries(TikCanvas PRIVATE
     Qt6::Widgets
     Qt6::Network
     Qt6::Concurrent
+    Qt6::Pdf
 )
-
-if(POPPLER_QT6_FOUND)
-    target_link_libraries(TikCanvas PRIVATE PkgConfig::POPPLER_QT6)
-endif()
 
 set_target_properties(TikCanvas PROPERTIES OUTPUT_NAME "TikCanvas")

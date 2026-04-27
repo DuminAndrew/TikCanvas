@@ -1,21 +1,38 @@
 #include "MndpScanner.h"
 #include <QUdpSocket>
 #include <QNetworkDatagram>
+#include <QNetworkInterface>
 
 MndpWorker::MndpWorker(QObject *parent) : QObject(parent) {}
 
 void MndpWorker::start()
 {
     m_sock = new QUdpSocket(this);
-    m_sock->bind(QHostAddress::AnyIPv4, 5678, QUdpSocket::ShareAddress);
+    m_sock->bind(QHostAddress::AnyIPv4, 5678,
+                 QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
     connect(m_sock, &QUdpSocket::readyRead, this, &MndpWorker::onReadyRead);
+
+    m_timer = new QTimer(this);
+    m_timer->setInterval(5000);
+    connect(m_timer, &QTimer::timeout, this, &MndpWorker::discover);
+    m_timer->start();
+
+    QTimer::singleShot(200, this, &MndpWorker::discover);
 }
 
 void MndpWorker::discover()
 {
     if (!m_sock) return;
-    QByteArray req(4, 0);
+    const QByteArray req(4, 0);
     m_sock->writeDatagram(req, QHostAddress::Broadcast, 5678);
+    for (const auto &iface : QNetworkInterface::allInterfaces()) {
+        if (!(iface.flags() & QNetworkInterface::IsUp) ||
+            !(iface.flags() & QNetworkInterface::CanBroadcast)) continue;
+        for (const auto &entry : iface.addressEntries()) {
+            if (entry.broadcast().isNull()) continue;
+            m_sock->writeDatagram(req, entry.broadcast(), 5678);
+        }
+    }
 }
 
 void MndpWorker::onReadyRead()
@@ -25,7 +42,8 @@ void MndpWorker::onReadyRead()
         const QByteArray data = dg.data();
         if (data.size() < 4) continue;
 
-        QString mac, ip = dg.senderAddress().toString(), identity;
+        QString mac, ip = dg.senderAddress().toString();
+        QString identity, version, board, platform;
         int pos = 4;
         while (pos + 4 <= data.size()) {
             quint16 type = (quint8(data[pos]) << 8) | quint8(data[pos+1]);
@@ -46,14 +64,15 @@ void MndpWorker::onReadyRead()
                             .toUpper();
                     }
                     break;
-                case 0x0005:
-                    identity = QString::fromUtf8(val);
-                    break;
+                case 0x0005: identity = QString::fromUtf8(val); break;
+                case 0x0007: version  = QString::fromUtf8(val); break;
+                case 0x0008: platform = QString::fromUtf8(val); break;
+                case 0x000B: board    = QString::fromUtf8(val); break;
                 default: break;
             }
             pos += len;
         }
-        emit deviceFound(mac, ip, identity);
+        emit deviceFound(mac, ip, identity, version, board, platform);
     }
 }
 

@@ -15,11 +15,13 @@ bool ProjectFile::save(const QString &path, const QString &pdfPath,
     QJsonArray dev;
     for (const auto &d : devices) {
         QJsonObject o;
-        o["id"]   = d.id;
-        o["name"] = d.name;
-        o["ip"]   = d.ip;
-        o["x"]    = d.pos.x();
-        o["y"]    = d.pos.y();
+        o["id"]     = d.id;
+        o["name"]   = d.name;
+        o["ip"]     = d.ip;
+        o["x"]      = d.pos.x();
+        o["y"]      = d.pos.y();
+        o["radius"] = d.coverageRadius;
+        o["color"]  = d.coverageColor;
         dev.append(o);
     }
     root["devices"] = dev;
@@ -32,6 +34,7 @@ bool ProjectFile::save(const QString &path, const QString &pdfPath,
         lnk.append(o);
     }
     root["links"] = lnk;
+    Q_UNUSED(root);
 
     QFile f(path);
     if (!f.open(QIODevice::WriteOnly | QIODevice::Truncate)) return false;
@@ -58,6 +61,8 @@ bool ProjectFile::load(const QString &path, QString &pdfPath,
         d.name = o.value("name").toString();
         d.ip   = o.value("ip").toString();
         d.pos  = QPointF(o.value("x").toDouble(), o.value("y").toDouble());
+        d.coverageRadius = o.value("radius").toDouble(0.0);
+        d.coverageColor  = o.value("color").toString("#4FC3F7");
         devices.push_back(d);
     }
     links.clear();

@@ -1,6 +1,7 @@
 #pragma once
 #include <QObject>
 #include <QThread>
+#include <QTimer>
 
 class QUdpSocket;
 
@@ -13,11 +14,14 @@ public slots:
     void start();
     void discover();
 signals:
-    void deviceFound(const QString &mac, const QString &ip, const QString &identity);
+    void deviceFound(const QString &mac, const QString &ip,
+                     const QString &identity, const QString &version,
+                     const QString &board, const QString &platform);
 private slots:
     void onReadyRead();
 private:
     QUdpSocket *m_sock {nullptr};
+    QTimer     *m_timer {nullptr};
 };
 
 class MndpScanner : public QObject
@@ -29,7 +33,9 @@ public:
     void start();
     void triggerDiscovery();
 signals:
-    void deviceFound(const QString &mac, const QString &ip, const QString &identity);
+    void deviceFound(const QString &mac, const QString &ip,
+                     const QString &identity, const QString &version,
+                     const QString &board, const QString &platform);
     void doStart();
     void doDiscover();
 private:

@@ -13,6 +13,7 @@
       <property name="frameShape"><enum>QFrame::StyledPanel</enum></property>
       <layout class="QVBoxLayout" name="sideLayout">
        <item><widget class="QLabel" name="lblTitle"><property name="text"><string>TikCanvas</string></property><property name="styleSheet"><string>font-size:22px;font-weight:bold;color:#4FC3F7;padding:8px;</string></property></widget></item>
+       <item><widget class="QLabel" name="lblStatus"><property name="text"><string>● Disconnected</string></property><property name="styleSheet"><string>color:#FF5252;padding:4px 8px;font-weight:bold;</string></property></widget></item>
        <item><widget class="QLabel" name="lblHost"><property name="text"><string>Host</string></property></widget></item>
        <item><widget class="QLineEdit" name="editHost"><property name="placeholderText"><string>192.168.88.1</string></property></widget></item>
        <item><widget class="QLabel" name="lblUser"><property name="text"><string>User</string></property></widget></item>
@@ -26,8 +27,30 @@
        <item><widget class="QPushButton" name="btnScan"><property name="text"><string>Discover (MNDP)</string></property></widget></item>
        <item><widget class="QPushButton" name="btnLoadPdf"><property name="text"><string>Load PDF Map</string></property></widget></item>
        <item><widget class="QPushButton" name="btnLinkMode"><property name="checkable"><bool>true</bool></property><property name="text"><string>Link Mode</string></property></widget></item>
+       <item>
+        <layout class="QHBoxLayout">
+         <item><widget class="QPushButton" name="btnRotateLeft"><property name="text"><string>↶ 90°</string></property><property name="toolTip"><string>Повернуть PDF влево</string></property></widget></item>
+         <item><widget class="QPushButton" name="btnRotateRight"><property name="text"><string>↷ 90°</string></property><property name="toolTip"><string>Повернуть PDF вправо</string></property></widget></item>
+        </layout>
+       </item>
+       <item><widget class="QPushButton" name="btnBlankMap"><property name="text"><string>📐 Чистая карта</string></property><property name="toolTip"><string>Удалить PDF и рисовать с нуля</string></property></widget></item>
+       <item><widget class="QPushButton" name="btnVectorize"><property name="text"><string>🪄 Векторизовать PDF</string></property><property name="toolTip"><string>Автоматически обвести стены на загруженном PDF и превратить в редактируемую карту</string></property><property name="styleSheet"><string>background:#7C4DFF;color:white;font-weight:bold;padding:8px;</string></property></widget></item>
+       <item>
+        <layout class="QHBoxLayout">
+         <item><widget class="QPushButton" name="btnPen"><property name="checkable"><bool>true</bool></property><property name="text"><string>✏</string></property><property name="toolTip"><string>Карандаш</string></property></widget></item>
+         <item><widget class="QPushButton" name="btnRect"><property name="checkable"><bool>true</bool></property><property name="text"><string>▭</string></property><property name="toolTip"><string>Прямоугольник</string></property></widget></item>
+         <item><widget class="QPushButton" name="btnErase"><property name="checkable"><bool>true</bool></property><property name="text"><string>🧽</string></property><property name="toolTip"><string>Ластик</string></property></widget></item>
+         <item><widget class="QPushButton" name="btnClearDraw"><property name="text"><string>🗑</string></property><property name="toolTip"><string>Стереть всё</string></property></widget></item>
+        </layout>
+       </item>
        <item><widget class="QLabel" name="lblDevices"><property name="text"><string>Devices (drag to map)</string></property></widget></item>
-       <item><widget class="QListWidget" name="listDevices"/></item>
+       <item><widget class="DeviceListWidget" name="listDevices"/></item>
+       <item>
+        <layout class="QHBoxLayout">
+         <item><widget class="QPushButton" name="btnPlaceOnMap"><property name="text"><string>📍 На карту</string></property><property name="toolTip"><string>Поставить выбранное устройство в центр карты</string></property><property name="styleSheet"><string>background:#69F0AE;color:#11111B;font-weight:bold;padding:8px;</string></property></widget></item>
+         <item><widget class="QPushButton" name="btnConfigure"><property name="text"><string>⚙ Настроить</string></property><property name="styleSheet"><string>background:#4FC3F7;color:#11111B;font-weight:bold;padding:8px;</string></property></widget></item>
+        </layout>
+       </item>
       </layout>
      </widget>
     </item>
@@ -35,9 +58,54 @@
      <widget class="QSplitter" name="splitter">
       <property name="orientation"><enum>Qt::Vertical</enum></property>
       <widget class="QWidget" name="canvasContainer" native="true"/>
-      <widget class="QPlainTextEdit" name="logView">
-       <property name="readOnly"><bool>true</bool></property>
-       <property name="maximumSize"><size><width>16777215</width><height>240</height></size></property>
+      <widget class="QTabWidget" name="bottomTabs">
+       <property name="maximumSize"><size><width>16777215</width><height>280</height></size></property>
+       <widget class="QWidget" name="tabSyslog">
+        <attribute name="title"><string>Syslog</string></attribute>
+        <layout class="QVBoxLayout">
+         <item>
+          <widget class="QPlainTextEdit" name="logView">
+           <property name="readOnly"><bool>true</bool></property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tabTerminal">
+        <attribute name="title"><string>Terminal</string></attribute>
+        <layout class="QVBoxLayout">
+         <item>
+          <widget class="QPlainTextEdit" name="terminalView">
+           <property name="readOnly"><bool>true</bool></property>
+           <property name="placeholderText"><string>RouterOS API output...</string></property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout">
+           <item>
+            <widget class="QLineEdit" name="editCmd">
+             <property name="placeholderText"><string>/system/resource/print</string></property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnSendCmd">
+             <property name="text"><string>Send</string></property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tabInfo">
+        <attribute name="title"><string>Device Info</string></attribute>
+        <layout class="QVBoxLayout">
+         <item>
+          <widget class="QPlainTextEdit" name="infoView">
+           <property name="readOnly"><bool>true</bool></property>
+           <property name="placeholderText"><string>Connect to a device to see /system/resource and /system/identity</string></property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </widget>
     </item>
@@ -46,6 +114,13 @@
   <widget class="QMenuBar" name="menubar"/>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DeviceListWidget</class>
+   <extends>QListWidget</extends>
+   <header>widgets/DeviceListWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

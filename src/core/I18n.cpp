@@ -10,7 +10,7 @@ I18n &I18n::instance()
 bool I18n::setLanguage(const QString &code)
 {
     QCoreApplication::removeTranslator(&m_translator);
-    const QString resPath = QStringLiteral(":/i18n/tikcanvas_%1.qm").arg(code);
+    const QString resPath = QStringLiteral(":/i18n/tikcanvas_%1").arg(code);
     if (m_translator.load(resPath)) {
         QCoreApplication::installTranslator(&m_translator);
     }

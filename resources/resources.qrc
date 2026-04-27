@@ -6,4 +6,8 @@
     <qresource prefix="/icons">
         <file alias="app.svg">../icon.svg</file>
     </qresource>
+    <qresource prefix="/i18n">
+        <file alias="tikcanvas_ru.qm">i18n/tikcanvas_ru.qm</file>
+        <file alias="tikcanvas_en.qm">i18n/tikcanvas_en.qm</file>
+    </qresource>
 </RCC>
